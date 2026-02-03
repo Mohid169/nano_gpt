@@ -63,7 +63,7 @@ for b in range(batch_size):  # batch size of the tensor
     for t in range(block_size):  # time dimension
         context = xb[b, : t + 1]
         target = yb[b, t]
-        print(f"when input is {context} the target is {target}")
+       # print(f"when input is {context} the target is {target}")
 
 class BigramLanguageModel(nn.Module):
     def __init__(self, vocab_size):
