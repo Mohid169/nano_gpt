@@ -1,3 +1,6 @@
+import torch
+import torch.nn as nn
+from torch.nn import functional as F
 with open("input.txt", "r") as file:
     text = file.read()
 
@@ -18,7 +21,7 @@ decode = lambda l: "".join([itos[i] for i in l])
 # print(encode("hii there"))
 # print(decode(encode("hii there")))
 
-import torch
+
 
 data = torch.tensor(encode(text), dtype=torch.long)
 # print(data.shape, data.dtype)
@@ -61,3 +64,17 @@ for b in range(batch_size):  # batch size of the tensor
         context = xb[b, : t + 1]
         target = yb[b, t]
         print(f"when input is {context} the target is {target}")
+
+class BigramLanguageModel(nn.Module):
+    def __init__(self, vocab_size):
+        super().__init__()
+        # each token directly reads off the logits for the next token from a lookup table
+        self.token_embedding_table = nn.Embedding(vocab_size, vocab_size) # vocab_size x vocab_size embedding
+
+    def forward(self, idx, targets):
+        logits = self.token_embedding_table(idx)
+        return logits
+
+m = BigramLanguageModel(vocab_size)
+out = m(xb,yb)
+print(out.shape)
