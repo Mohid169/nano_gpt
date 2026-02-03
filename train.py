@@ -76,5 +76,6 @@ class BigramLanguageModel(nn.Module):
         return logits
 
 m = BigramLanguageModel(vocab_size)
+print(m)
 out = m(xb,yb)
 print(out.shape)
